@@ -42,3 +42,9 @@ GRANT 'u2' TO 'r2';   -- mixed user/role loop: u2 => r2 => u2
 
 1. GRANT USAGE ON *.* TO 'someuser'@'somehost' WITH GRANT OPTION;
 
+
+
+
+
+
+
