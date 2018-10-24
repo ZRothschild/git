@@ -43,22 +43,22 @@
 ###  `git clone -v  https://github.com/ZRothschild/git.git`
 > 印出被拉取的项目详情，进度，错误
 
-![git clone -v](./img/clone/v.jpg)
+![git clone -v](git/img/clone/v.jpg)
 
 ###  `git clone -q  https://github.com/ZRothschild/git.git`
 > 与`-v`相反,什么都不对打印
 
-![git clone -q](./img/clone/q.jpg)
+![git clone -q](git/img/clone/q.jpg)
 
 ###  `git clone --progress  https://github.com/ZRothschild/git.git`
 > 强制打印进度报告
 
-![git clone -progress](./img/clone/progress.jpg)
+![git clone -progress](git/img/clone/progress.jpg)
 
 ###  `git clone -n  https://github.com/ZRothschild/git.git`
 >  只会拉取`.git`文件,项目文件需要自行`pull`
 
-![git clone -n](./img/clone/n.jpg)
+![git clone -n](git/img/clone/n.jpg)
 
 
 ###  `git clone --bare  https://github.com/ZRothschild/git.git`
@@ -66,11 +66,11 @@
 > 2. 这显然意味着`-n`因为无处可查看工作树.远程处的分支头也直接复制到相应的本地分支头,而不将它们映射到`refs/remotes/origin/`.
 > 3. 使用此选项时,既不会创建远程跟踪分支,也不会创建相关的配置变量.不包含工作区.
 
-![git clone -bare](./img/clone/bare.jpg)
+![git clone -bare](git/img/clone/bare.jpg)
 
 > 拉取文件示例
 
-![git clone -bare](./img/clone/bare_rep_one.jpg)
+![git clone -bare](git/img/clone/bare_rep_one.jpg)
 
 >  `config`文件配置信息
 
@@ -91,11 +91,11 @@
 > 3. 设置远程跟踪,这样如果你运行`git`远程更新,所有引用都将被覆盖,就好像你刚刚删除了镜像并重新克隆它一样.
 > 4. 正如文档最初所说,它是一面镜子.它应该是功能相同的副本,可与原始副本互换.
 
-![git clone -mirror](./img/clone/mirror.jpg)
+![git clone -mirror](git/img/clone/mirror.jpg)
 
 > 拉取文件示例与`--bare`一样,只是配置文件不同
 
-![git clone -mirror](./img/clone/bare_rep_one.jpg)
+![git clone -mirror](git/img/clone/bare_rep_one.jpg)
 
 >  config 文件配置信息
 
@@ -118,13 +118,13 @@
 > 3. 如果将存储库指定为本地路径(例如,`/path/to/repo`),则这是默认值,而`--local`本质上是无操作.如果将存储库指定为URL,则忽略此标志(并且我们从不使用本地优化).
 > 4. 指定`--no-local`将在使用常规`Git`传输时给出`/path/to/repo`时覆盖默认值,不懂什么是硬链接的自己百度.
 
-![git clone -l](./img/clone/l.jpg)
+![git clone -l](git/img/clone/l.jpg)
 
 ###  `git clone --no-hardlinks ./git/.git  ./test`
 > 1. 从本地文件系统上的存储库强制克隆进程,以复制`.git/objects`目录下的文件,而不是使用硬链接. 如果您尝试备份存储库,则可能需要这样做.
 > 2. `-l .git/objects/`目录下的文件是硬链接,而 `--no-hardlinks`是复制,当参考的仓库被删除,将导致本仓库也会出现问题.
 
-![git clone -l](./img/clone/no-hardlinks.jpg)
+![git clone -l](git/img/clone/no-hardlinks.jpg)
 
 
 ###  `git clone -s ./git/.git`
