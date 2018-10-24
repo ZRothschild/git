@@ -60,6 +60,8 @@ tar `[OPTION...]` `[FILE]`..
 5. tar -jxv -f filename.tar.bz2 -C filename //解压到指定目录
 6. tar -zxvf filename.tar.gz go/index.go -C test //filename.tar.gz里面包含go，test文件夹，go里面有很多文件其中就有index.go,
 此命令是，从filename.tar.gz解压出go文件加里面的index.go,并解压到test文件夹
+7. tar -zxvf test.tar.gz --strip-components 1 -C  aa/   //test.tar.gz 压缩了test文件，里面有很多文件。此命令是解压test
+把里面的内容放入aa文件夹
 
 ### 总结
 
