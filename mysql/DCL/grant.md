@@ -3,7 +3,7 @@
 ### Global Privileges
 
 1. GRANT ALL ON `*.*` TO 'someuser'@'somehost';
-2. GRANT SELECT, INSERT ON *.* TO 'someuser'@'somehost';
+2. GRANT SELECT, INSERT ON `*.*` TO 'someuser'@'somehost';
 
 ### Table Privileges
 
@@ -40,4 +40,5 @@ GRANT 'u2' TO 'r2';   -- mixed user/role loop: u2 => r2 => u2
 
 ### Other Account Characteristics
 
-1. GRANT USAGE ON *.* TO 'someuser'@'somehost' WITH GRANT OPTION;
+1. GRANT USAGE ON `*.*` TO 'someUser'@'someHost' WITH GRANT OPTION;
+`WITH GRANT OPTION`的作用是someUser可以把他拥有的权限赋予其他用户
