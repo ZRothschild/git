@@ -1,0 +1,53 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - data:/var/lib/mysql
+      - conf:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=nm123
+    container_name: mysql8.0
+    networks:
+      rear:
+        aliases:
+          - database
+    restart: always
+  php:
+    image: php:7.2.3-fpm
+    volumes:
+      - ./src:/var/www
+#      - ./php:/usr/local/etc/php
+#      - ./php/conf.d:/usr/local/etc/php/conf.d
+#      - ./php/php-fpm.d:/usr/local/etc/php-fpm.d
+    container_name: php7.3
+    ports:
+      - 9000:9000
+    networks:
+      - rear
+      - external
+    restart: always
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./src:/var/www
+    container_name: nginx1.7
+    networks:
+      external:
+        aliases:
+          - nginx1
+    restart: always
+networks:
+  rear:
+  external:
+volumes:
+  data:
+  conf:
