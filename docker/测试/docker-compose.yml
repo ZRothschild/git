@@ -1,0 +1,100 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql:5.7
+    #mysql8 将会使用不同密码加密所以需要设置会原始加密方式
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      #数据存放地址
+      - sqlData:/var/lib/mysql
+      #数据库配置地址
+      - ./mysqlConf:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=nm123
+    container_name: mysql5.7
+    networks:
+      rear:
+        aliases:
+          - database
+    restart: always
+  php:
+    image: php:7.3.3-fpm
+    volumes:
+      - type: bind
+        source: ./www
+        target: /var/www/html
+      # volumes的volume类型 (source 必须是一个资源名称而不是路径)
+      # volumes的volume类型,phpconf路径 /var/lib/docker/volumes/vagrantdata_phpconf/_data
+      # 可以任意操作此文件（注意权限问题）
+      - type: bind
+        source: phpConf
+        target: /usr/local/etc/php/conf.d
+    container_name: php7.3
+    ports:
+      - 9000:9000
+    networks:
+      - rear
+      - external
+    restart: always
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      # 下面都是bind模式，此模式下面主机文件将会覆盖容器内文件，当取消时，文件将恢复
+      # 文件夹下面不能再包含文件夹，只允许有文件，不然容器一致会在restarting状态
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx
+      - ./www:/var/www/html
+    container_name: nginx1.7
+    networks:
+      external:
+        # 网络别名主要用来给其他容器来通信，当设置了相同的网络，就可以使用要联通的目标容器名称
+        # 或者网络别名，服务名称，或者共同网关通信，常规用目标容器网络别名
+        aliases:
+          - nginx1
+  redis:
+    image: redis:5.0.3-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redisData:/data
+    container_name: redis5.0
+    networks:
+      rear:
+        aliases:
+          - redis5
+    restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: es
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      #- ./es6:/usr/share/elasticsearch/config
+    ports:
+      - 9300:9300
+    networks:
+      rear:
+        aliases:
+          - es6
+    restart: always
+networks:
+  rear:
+  external:
+#volumes 对应的声明
+volumes:
+  sqlData:
+  redisData:
+  esdata:
+    driver: local

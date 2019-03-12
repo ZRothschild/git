@@ -1,0 +1,15 @@
+https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-setup
+1.首先下载 mysql-apt-config_w.x.y-z_all.deb 包仓库
+2.sudo dpkg -i /PATH/version-specific-package-name.deb    例如 sudo dpkg -i mysql-apt-config_w.x.y-z_all.deb
+3. sudo apt-get update 更新仓库
+4.sudo apt-get install mysql-server 安装服务
+
+
+
+
+./configure
+    --prefix=/usr/local/lnmpSofte/nginx1.15 \
+    --sbin-path=/usr/local/lnmpSofte/nginx1.15 \
+    --conf-path=/usr/local/lnmpSofte/nginx1.15/nginx.conf \
+    --pid-path=/usr/local/lnmpSofte/nginx1.15/nginx.pid \
+    --with-http_ssl_module
