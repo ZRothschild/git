@@ -1,0 +1,46 @@
+version: '3.2'
+services:
+  jenkins:
+    image: jenkins
+    volumes:
+      #数据存放地址
+      - ./jenkinsData:/var/jenkins_home
+    ports:
+      - 8088:8080
+      - 50000:50000
+    container_name: jenkins
+    restart: always
+  #问题就是在于，vagrant 没有给到gitlab 需要的内存，
+  #和window下面对.ssh 文件的保护，不要用vagrant映射到window上面
+  #关闭防火墙
+  gitlab-ce:
+    image: gitlab/gitlab-ce
+    volumes:
+      #数据存放地址
+      - "./gitlab:/etc/gitlab"
+      - "./gitlabLog:/var/log/gitlab"
+      - "gitlab:/var/opt/gitlab"
+  #  tty: true
+    privileged: true
+    hostname: 'gitlab'
+    environment:
+      TZ: 'Asia/Shanghai'
+    ports:
+      # 8001 代表宿主机端口
+      - 8001:80
+      # - 2223:22
+      # - 4430:443
+    container_name: gitlab
+    # restart: always
+volumes:
+  gitlab:
+    external: true
+# 可以运行
+#sudo docker run --detach \
+#--publish 443:443 --publish 80:80 --publish 2002:22 \
+#--name lab \
+#--restart always \
+#--volume /home/vagrant/gitlab:/etc/gitlab \
+#--volume /home/vagrant/gitlabLog:/var/log/gitlab \
+#--volume /home/vagrant/gitlabOpt:/var/opt/gitlab \
+#gitlab/gitlab-ce:latest

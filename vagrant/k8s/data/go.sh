@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #/bin/sh
 
 ETCD_VER=v3.3.11
@@ -10,7 +11,7 @@ DOWNLOAD_URL=${GOOGLE_URL}
 sudo rm -f /data/go1.11.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 
-curl -L https://studygolang.com/dl/golang/go1.11.linux-amd64.tar.gz
+curl -L https://studygolang.com/dl/golang/go1.12.linux-amd64.tar.gz
 tar xzvf /data/golang/go1.11.linux-amd64.tar.gz -C /usr/local/
 sudo rm -f /data/go1.11.linux-amd64.tar.gz
 

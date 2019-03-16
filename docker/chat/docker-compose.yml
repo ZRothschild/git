@@ -1,0 +1,50 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql:5.7
+    #mysql8 将会使用不同密码加密所以需要设置会原始加密方式
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      #数据存放地址
+      - sqlData:/var/lib/mysql
+      #数据库配置地址
+      - ./mysqlConf:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=nm123
+    container_name: mysql5.7
+    networks:
+      rear:
+        aliases:
+          - database
+    restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: es
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      - ./esConf:/usr/share/elasticsearch/config
+    ports:
+      - 9200:9200
+    networks:
+      external:
+        aliases:
+          - es6
+    restart: always
+networks:
+  rear:
+  external:
+#volumes 对应的声明
+volumes:
+  sqlData:
+  esdata:
+    driver: local
