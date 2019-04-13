@@ -85,6 +85,9 @@ docker-compose rm [options] [SERVICE...]
 //Stops containers and removes containers, networks, volumes, and images created by `up`.
 docker-compose down [options]
 
+//进入容器
+docker-compose exec zhichi-docker /bin/bash
+
 ```
 ## volume
 ```smartyconfig
