@@ -13,3 +13,32 @@ https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-setup
     --conf-path=/usr/local/lnmpSofte/nginx1.15/nginx.conf \
     --pid-path=/usr/local/lnmpSofte/nginx1.15/nginx.pid \
     --with-http_ssl_module
+
+
+1. mysql 安装 下载地址  看系统Linux centos https://dev.mysql.com/downloads/repo/yum/
+2. 运行  sudo yum localinstall platform-and-version-specific-package-name.rpm （platform-and-version-specific-package-name平台包名）
+3. 查看是否成功 yum repolist enabled | grep "mysql.*-community.*"
+4. 查看源有哪里 yum repolist all | grep mysql
+5. sudo yum-config-manager --disable mysql57-community （没有就不需要）
+6.  sudo yum-config-manager --enable mysql80-community （没有就不需要）
+7. 可以去 /etc/yum.repos.d/mysql-community.rep 里面直接设置是否可用
+
+# Enable to use MySQL 8.0
+[mysql80-community]
+name=MySQL 8.0 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-8.0-community/el/6/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+
+8.查看可以用的 yum repolist enabled | grep mysql
+9. sudo yum install mysql-community-server 安装命令
+10. sudo service mysqld start 启动命令
+11. sudo service mysqld status 查看状态
+12. sudo grep 'temporary password' /var/log/mysqld.log 查看初始密码
+13.登陆修改密码  ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+14. 尝试这个命令 grant all privileges on *.* to 'root'@'%' with grant option;
+15. 不行设置远程可以访问 update user set host='%' where user='root';
+16. 过期时间 ALTER USER 'root'@'%' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
+17.设置密码类型 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+18. 刷新  FLUSH PRIVILEGES
