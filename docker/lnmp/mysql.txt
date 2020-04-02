@@ -1,10 +1,14 @@
 https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-setup
 1.首先下载 mysql-apt-config_w.x.y-z_all.deb 包仓库
 2.sudo dpkg -i /PATH/version-specific-package-name.deb    例如 sudo dpkg -i mysql-apt-config_w.x.y-z_all.deb
+3.如果有选择ok
 3. sudo apt-get update 更新仓库
 4.sudo apt-get install mysql-server 安装服务
+5. 忘记密码可以 在 /etc/mysql/conf.d/mysql.cnf 也就是配置文件中配置 不需要密码登录
+[mysqld]
+skip-grant-tables
 
-
+数据库密码 Nm123456.
 
 
 ./configure
@@ -36,7 +40,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
 10. sudo service mysqld start 启动命令
 11. sudo service mysqld status 查看状态
 12. sudo grep 'temporary password' /var/log/mysqld.log 查看初始密码
-13.登陆修改密码  ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+13.登陆修改密码  ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!'; [密码设置必须有大小写和特殊符号不然登录不了]
 14. 尝试这个命令 grant all privileges on *.* to 'root'@'%' with grant option;
 15. 不行设置远程可以访问 update user set host='%' where user='root';
 16. 过期时间 ALTER USER 'root'@'%' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;

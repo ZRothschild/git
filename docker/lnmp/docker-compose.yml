@@ -17,6 +17,7 @@ services:
         aliases:
           - database
     restart: always
+    UPDATE user SET Password = password ('nm123456.') WHERE User = ‘root’;
   php:
     image: php:7.2.3-fpm
     volumes:
